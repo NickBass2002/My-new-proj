@@ -1,0 +1,41 @@
+// Function to fetch data from the API
+function getUsers() {
+  fetch('https://api.example.com/users')
+    .then(response => {
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // Parse the JSON response
+      return response.json();
+    })
+    .then(data => {
+      // Process the JSON data
+      displayUsers(data);
+    })
+    .catch(error => {
+      // Handle any errors that occurred during the fetch
+      console.error('There was a problem with the fetch operation:', error);
+    });
+}
+
+// Function to display users
+function displayUsers(users) {
+  // Assuming there's a div with id "userList" to display users
+  const userListDiv = document.getElementById('userList');
+  // Clear previous content
+  userListDiv.innerHTML = '';
+  // Create a list element to hold users
+  const userList = document.createElement('ul');
+  // Loop through each user and create list items
+  users.forEach(user => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${user.firstName} ${user.lastName}`;
+    userList.appendChild(listItem);
+  });
+  // Append the list to the div
+  userListDiv.appendChild(userList);
+}
+
+// Call the getUsers function to fetch and display users when the page loads
+document.addEventListener('DOMContentLoaded', getUsers);
